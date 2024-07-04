@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Company Landing Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to Tech Company</h1>
+            <p>Your partner in innovative technology solutions.</p>
+            <button class="cta-button" onclick="scrollToParentForm()">Contact</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>Tech Company is a leading provider of innovative technology solutions. We specialize in delivering custom
+                software development, cloud computing, and IT consulting services to businesses of all sizes.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="service">
+                <h3>Custom Software Development</h3>
+                <p>We build tailored software solutions to meet your business needs.</p>
+            </div>
+            <div class="service">
+                <h3>Cloud Computing</h3>
+                <p>Leverage the power of the cloud with our comprehensive cloud services.</p>
+            </div>
+            <div class="service">
+                <h3>IT Consulting</h3>
+                <p>Our expert consultants provide strategic guidance to help you achieve your IT goals.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function scrollToParentForm() {
+            console.log("Sending message to parent window to scroll to contact form");
+            window.parent.postMessage({ type: "scrollTo", id: "contact" }, "*");
+        }
+    </script>
+</body>
+
+</html>
