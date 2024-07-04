@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { scroller } from "react-scroll";
+import SyncLoader from "react-spinners/SyncLoader";
 import "./page.css";
 
 const scrollToMessage = (event: MessageEvent<{ type: string; id: string }>) => {
@@ -27,10 +28,12 @@ const resizeIframe = (iframe: HTMLIFrameElement) => {
 export default function Home() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [resized, setResized] = useState(false);
 
   const afterIframeLoaded = useCallback(() => {
     if (iframeRef.current) {
       resizeIframe(iframeRef.current);
+      setResized(true);
     }
   }, []);
 
@@ -49,7 +52,11 @@ export default function Home() {
   }, [afterIframeLoaded, mounted]);
 
   if (!mounted) {
-    return null;
+    return (
+      <div className="spinner-container">
+        <SyncLoader color="#c28939" />
+      </div>
+    );
   }
 
   return (
@@ -59,38 +66,46 @@ export default function Home() {
         src="/send.html"
         title="Send"
         width="100%"
-        height="100%"
+        height="1px"
         ref={iframeRef}
         onLoad={afterIframeLoaded}
         className="overflow-hidden border-none"
       />
-      <section id="contact" className="contact">
-        <div className="container">
-          <h2>Contact Us</h2>
-          <p>
-            If you have any questions or would like to learn more about our
-            services, please get in touch.
-          </p>
-          <form>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" name="name" required />
+      {resized ? (
+        <>
+          <section id="contact" className="contact">
+            <div className="container">
+              <h2>Contact Us</h2>
+              <p>
+                If you have any questions or would like to learn more about our
+                services, please get in touch.
+              </p>
+              <form>
+                <label htmlFor="name">Name</label>
+                <input type="text" id="name" name="name" required />
 
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" required />
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" name="email" required />
 
-            <label htmlFor="message">Message</label>
-            <textarea id="message" name="message" rows={4} required />
+                <label htmlFor="message">Message</label>
+                <textarea id="message" name="message" rows={4} required />
 
-            <button type="submit">Submit</button>
-          </form>
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+          </section>
+
+          <footer>
+            <div className="container">
+              <p>&copy; 2024 Tech Company. All rights reserved.</p>
+            </div>
+          </footer>
+        </>
+      ) : (
+        <div className="spinner-container">
+          <SyncLoader color="#c28939" />
         </div>
-      </section>
-
-      <footer>
-        <div className="container">
-          <p>&copy; 2024 Tech Company. All rights reserved.</p>
-        </div>
-      </footer>
+      )}
     </>
   );
 }
